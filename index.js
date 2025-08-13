@@ -12,16 +12,16 @@ async function main() {
   const handles = await fetchContestParticipants(contestId);
   console.log(`Fetched ${handles.length} participants from contest ${contestId}`);
   // taking every 10th only
-  const sampledHandles = handles.filter((_, index) => index % 10 === 0);
+  //const sampledHandles = handles.filter((_, index) => index % 10 === 0);
   const output = [];
 
   const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
   await delay(1000);
-  for (const handle of sampledHandles) {
+  for (const handle of handles) {
     console.log(`Processing user: ${handle}`);
     try {
       const history = await fetchUserContestHistory(handle);
-      const pastContests = history.filter(h => h.contestId < contestId);
+      const pastContests = history.filter(h => h.contestId <=contestId);
       const recent = pastContests.slice(-10);
       await delay(750);
       for (const contest of recent) {
